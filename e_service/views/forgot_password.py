@@ -40,8 +40,8 @@ def reset_request_trader():
 
 @app.route("/reset_password_trader/<token>", methods=['GET', 'POST'])
 def reset_password_trader(token):
-    trader = Trader.verify_reset_token(token)  # Assuming you have the method in your Trader model
-    if trader is None:
+# Assuming you have the method in your Trader model
+    if (trader := Trader.verify_reset_token(token)) is None:
         flash('Invalid or expired token. Please try again.', 'warning')
         return redirect(url_for('reset_request_trader'))
 
@@ -79,8 +79,8 @@ def reset_request_user():
 
 @app.route("/reset_password_user/<token>", methods=['GET', 'POST'])
 def reset_password_user(token):
-    user = User.verify_reset_tokens(token)  # Assuming you have the method in your User model
-    if user is None:
+# Assuming you have the method in your User model
+    if (user := User.verify_reset_tokens(token)) is None:
         flash('Invalid or expired token. Please try again.', 'warning')
         return redirect(url_for('reset_request_user'))
 

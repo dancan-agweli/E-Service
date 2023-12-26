@@ -83,8 +83,7 @@ def upload_file():
 
 @app.route('/files')
 def list_files():
-    trader_id = get_current_trader_id()
-    if trader_id is None:
+    if (trader_id := get_current_trader_id()) is None:
         flash('Unauthorized', 'error')
         return redirect(url_for('login'))
 

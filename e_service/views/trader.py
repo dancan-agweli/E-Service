@@ -10,8 +10,7 @@ print(sys.path)
 @app.route('/fetch_traders/<int:id_user>', methods=['GET'])
 def fetch_nearby_traders(id_user):
     # Fetch the user's location
-    user_location = Cords.query.filter_by(id_user=id_user).first()
-    if user_location is None:
+    if (user_location := Cords.query.filter_by(id_user=id_user).first()) is None:
         return jsonify({'error': 'User location not found'})
 
     user_lat, user_lon = Cords.latitude, user_location.longitude

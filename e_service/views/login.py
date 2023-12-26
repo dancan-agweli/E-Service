@@ -21,18 +21,15 @@ login_manager.init_app(app)
 @login_manager.user_loader
 def load_user(user_id):
     # Try loading a User first
-    user = User.query.get(int(user_id))
-    if user:
+    if user := User.query.get(int(user_id)):
         return user
 
     # If User is not found, try loading a Trader
-    trader = Trader.query.get(int(user_id))
-    if trader:
+    if trader := Trader.query.get(int(user_id)):
         return trader
 
     # If Trader is not found, try loading an Admin
-    admin = Admin.query.get(int(user_id))
-    if admin:
+    if admin := Admin.query.get(int(user_id)):
         return admin
 
     # If no user is found, return None

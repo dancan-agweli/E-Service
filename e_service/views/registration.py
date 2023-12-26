@@ -151,9 +151,8 @@ def allowed_file(filename):
 def register_category():
     category_name = request.form['category_name']
 
-    existing_category = Category.query.filter_by(category_name=category_name).first()
 
-    if existing_category:
+    if existing_category := Category.query.filter_by(category_name=category_name).first():
         flash('Category already exists!', 'danger')
     else:
         new_category = Category(category_name=category_name)
@@ -251,9 +250,8 @@ def save_trader_coordinates():
 
 @app.route('/fetch_user_and_trader_locations/<int:user_id>', methods=['GET'])
 def fetch_user_and_trader_locations(user_id):
-    user_location = UserLocation.query.filter_by(user_id=user_id).first()
 
-    if user_location is None:
+    if (user_location := UserLocation.query.filter_by(user_id=user_id).first()) is None:
         return jsonify({'error': 'User location not found'})
 
     user_lat, user_lon = user_location.latitude, user_location.longitude
@@ -310,10 +308,9 @@ def fetch_user_and_trader_locations(user_id):
         distance = trader['distance']
 
         for service in trader['services']:
-            category = service['category']
 
             # Skip entries with None category
-            if category is None:
+            if (category := service['category']) is None:
                 continue
 
             if category not in categorized_traders:

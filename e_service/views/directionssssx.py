@@ -9,8 +9,7 @@ app = Flask(__name__)
 @app.route('/fetch_user_and_trader_locations/<int:user_id>', methods=['GET'])
 def fetch_user_and_trader_locations(user_id):
     # Fetch the user's location
-    user_location = UserLocation.query.filter_by(user_id=user_id).first()
-    if user_location is None:
+    if (user_location := UserLocation.query.filter_by(user_id=user_id).first()) is None:
         return render_template('error.html', error='User location not found')
 
     user_lat, user_lon = user_location.latitude, user_location.longitude
